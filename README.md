@@ -8,3 +8,4 @@ TODO
 * Add a real BEEP
 * create a simple debugger
 * load roms from commandline/dragndrop or something...
+* find out why Visual Studio default tab settings look bad on github
