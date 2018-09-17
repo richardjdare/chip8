@@ -11,9 +11,7 @@
 //----------------------------------------------------------------------------
 void Chip8::reset()
 {
-	// Program counter starts at 0x200
 	pc = progBase;
-
 	currentOpcode = 0;
 	I = 0;
 	sp = 0;
@@ -78,7 +76,6 @@ bool Chip8::load(std::string filename)
 //----------------------------------------------------------------------------
 void Chip8::tick()
 {
-	//fetch
 	currentOpcode = memory[pc] << 8 | memory[pc + 1];
 	decodeAndExecute(currentOpcode);
 	return;

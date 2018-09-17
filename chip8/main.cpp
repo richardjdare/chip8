@@ -58,8 +58,6 @@ int main(int argc, char * argv[])
 
 	SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
 
-	// init sound and load "BEEP"
-
 	Chip8 myChip8 = Chip8();
 
 	myChip8.reset();
@@ -72,7 +70,7 @@ int main(int argc, char * argv[])
 
 	while (!quit)
 	{
-		// lets run the whole thing at 60fps and dial down the
+		// lets run the whole thing at 60fps and dial up the
 		// cpu tick to 500hz or something. I dont think anyone knows
 		// what the actual times are!
 
@@ -96,8 +94,8 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		// we want to run several ticks per frame, depending on 
-		// clock speed and how many fps we are running at.
+		// we want to run at 500hz, so perform as many ticks as
+		// necessary given the current framerate
 		for (int i = 0; i < ticksPerFrame; i++)
 		{
 			myChip8.tick();
