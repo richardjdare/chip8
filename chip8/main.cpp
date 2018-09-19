@@ -13,9 +13,8 @@ const int screenWidth = 640;
 const int screenHeight = 320;
 const int framerate = 60;
 const int singleFrameMs = 1000 / framerate;
-// 500 hz
-const int clockSpeed = 500;
-const int ticksPerFrame = singleFrameMs / (1000 / clockSpeed);
+const int clockSpeedHz = 500;
+const int ticksPerFrame = singleFrameMs / (1000 / clockSpeedHz);
 const int pixelWidth =  screenWidth / Chip8::screenWidth;
 const int pixelHeight = screenHeight / Chip8::screenHeight;
 
@@ -122,7 +121,6 @@ int main(int argc, char * argv[])
 			cout << "BEEP!" << endl;
 		}
 
-
 		// Limit frame rate ( I *think* this is how you do it with sdl?)
 		if (SDL_GetTicks() - startTime < singleFrameMs)
 		{
@@ -149,8 +147,8 @@ void drawPixel(SDL_Renderer *renderer, int x, int y,int width,int height)
 	SDL_Rect r;
 	r.x = x * width;
 	r.y = y * height;
-	r.w = pixelWidth;
-	r.h = pixelHeight;
+	r.w = width;
+	r.h = height;
 
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderFillRect(renderer, &r);
@@ -165,8 +163,7 @@ void render(Chip8 *theChip8, SDL_Renderer *renderer)
 	{
 		for (int x = 0; x < Chip8::screenWidth; x++)
 		{
-			unsigned char pxl = theChip8->gfx[y * Chip8::screenWidth + x];
-			if (pxl == 1)
+			if (theChip8->gfx[y * Chip8::screenWidth + x] == 1)
 			{
 				drawPixel(renderer, x, y, pixelWidth, pixelHeight);
 			}
