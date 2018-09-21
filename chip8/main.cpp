@@ -23,7 +23,7 @@ const int pixelHeight = screenHeight / Chip8::screenHeight;
 //----------------------------------------------------------------------------
 void render(Chip8 *theChip8, SDL_Renderer *renderer);
 void updateKey(Chip8 *theChip8, SDL_Keycode sdlKeycode, Chip8::KeyStatus keyStatus);
-void drawPixel(SDL_Renderer *renderer, int x, int y, int pixelWidth, int pixelHeight);
+void drawPixel(SDL_Renderer *renderer, int x, int y, int width, int height);
 
 //----------------------------------------------------------------------------
 // main
