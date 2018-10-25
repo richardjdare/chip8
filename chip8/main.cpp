@@ -57,6 +57,19 @@ int main(int argc, char * argv[])
 
 	SDL_RenderSetLogicalSize(renderer, screenWidth, screenHeight);
 
+	// lets set up sound
+	SDL_AudioSpec wavSpec;
+	Uint32 wavLength;
+	Uint8 *wavBuffer;
+
+	// load BEEP
+	SDL_LoadWAV("beep.wav", &wavSpec, &wavBuffer, &wavLength);
+
+	// open audio device
+	SDL_AudioDeviceID deviceId = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 0);
+	SDL_PauseAudioDevice(deviceId, 0);
+
+	// init the emulator and go into the main loop
 	Chip8 myChip8 = Chip8();
 
 	myChip8.reset();
@@ -118,7 +131,8 @@ int main(int argc, char * argv[])
 		// are we playing a beep?
 		if (myChip8.willBeep())
 		{
-			cout << "BEEP!" << endl;
+			SDL_QueueAudio(deviceId, wavBuffer, wavLength);
+			//cout << "BEEP!" << endl;
 		}
 
 		// Limit frame rate ( I *think* this is how you do it with sdl?)
@@ -132,6 +146,8 @@ int main(int argc, char * argv[])
 		SDL_RenderPresent(renderer);
 	}
 
+	SDL_CloseAudioDevice(deviceId);
+	SDL_FreeWAV(wavBuffer);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
